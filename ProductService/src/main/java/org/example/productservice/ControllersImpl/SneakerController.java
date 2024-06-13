@@ -1,33 +1,50 @@
 package org.example.productservice.ControllersImpl;
 
+import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
-import org.antlr.v4.runtime.atn.SemanticContext;
+import lombok.RequiredArgsConstructor;
 import org.example.productservice.ProductService;
+import org.example.productservice.Services.SneakerService;
 import org.example.productservice.SneakerControllerGrpc;
 
+@RequiredArgsConstructor
 public class SneakerController extends SneakerControllerGrpc.SneakerControllerImplBase {
-    public void getSneaker(
-            ProductService.SneakerRequest request,
-            StreamObserver<ProductService.SneakerResponse> response) {
 
+    private final SneakerService sneakerService;
+    @Override
+    public void updateSneaker(ProductService.SneakerRequestWithId request,
+                              StreamObserver<ProductService.SneakerResponse> responseObserver) {
+        sneakerService.updateSneaker(request, responseObserver);
     }
 
-    public void updateSneaker(
-            ProductService.SneakerRequestWithId request,
-            StreamObserver<ProductService.SneakerResponse> sneakerResponse) {
-
+    @Override
+    public void addSneaker(ProductService.SneakerRequest request,
+                           StreamObserver<ProductService.SneakerResponse> responseObserver) {
+        sneakerService.addSneaker(request, responseObserver);
     }
 
-    public void addSneaker(
-            ProductService.SneakerRequest request,
-            ProductService.SneakerResponse response) {
-
+    @Override
+    public void deleteSneaker(ProductService.SneakerId request,
+                              StreamObserver<Empty> responseObserver) {
+        sneakerService.deleteSneaker(request, responseObserver);
     }
 
-    public void deleteSneaker(
-            ProductService.SneakerId sneakerId,
-            StreamObserver<>) {
+    @Override
+    public void getAllSneakersFilter(ProductService.FilterRequest request,
+                                     StreamObserver<ProductService.SneakerResponse> responseObserver) {
+        sneakerService.getAllSneakersFilter(request, responseObserver);
+    }
 
+    @Override
+    public void changeQuantity(ProductService.SneakerIdQuantity request,
+                               StreamObserver<ProductService.SneakerResponse> responseObserver) {
+        sneakerService.changeQuantity(request, responseObserver);
+    }
+
+    @Override
+    public void getSneaker(ProductService.SneakerId request,
+                           StreamObserver<ProductService.SneakerResponse> response) {
+        sneakerService.getSneaker(request, response);
     }
 
 }

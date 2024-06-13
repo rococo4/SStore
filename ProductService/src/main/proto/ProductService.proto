@@ -53,7 +53,7 @@ service SneakerController {
   rpc updateSneaker(SneakerRequestWithId) returns (SneakerResponse);
   rpc addSneaker(SneakerRequest) returns (SneakerResponse);
   rpc deleteSneaker(SneakerId) returns (google.protobuf.Empty);
-  rpc GetAllSneakersFilter(FilterRequest) returns (SneakerResponseRepeated);
+  rpc getAllSneakersFilter(FilterRequest) returns (stream SneakerResponse);
   rpc changeQuantity(SneakerIdQuantity) returns (SneakerResponse);
 }
 
@@ -75,8 +75,8 @@ message CategoryResponseRepeated {
 
 service CategoryController {
   rpc getCategory(CategoryId) returns (CategoryResponse);
-  rpc updateCategory(CategoryIdName) returns (CategoryIdName);
+  rpc updateCategory(CategoryIdName) returns (CategoryResponse);
   rpc addCategory(CategoryName) returns (CategoryResponse);
   rpc deleteCategory(CategoryId) returns (google.protobuf.Empty);
-  rpc getAllCategory(google.protobuf.Empty) returns (CategoryResponseRepeated);
+  rpc getAllCategory(google.protobuf.Empty) returns (stream CategoryResponse);
 }
