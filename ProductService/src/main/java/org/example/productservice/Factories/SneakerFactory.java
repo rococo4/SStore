@@ -12,6 +12,7 @@ public class SneakerFactory {
     private final CategoryFactory categoryFactory;
 
     public ProductService.SneakerResponse makeSneakerResponse(SneakerEntity sneakerEntity) {
+        ProductService.SneakerResponse.newBuilder()
         return ProductService.SneakerResponse.newBuilder()
                 .setSneakerId(sneakerEntity.getSneakerId())
                 .setSneakerName(sneakerEntity.getSneakerName())
