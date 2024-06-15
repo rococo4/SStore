@@ -1,0 +1,69 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+package org.example.productservice;
+
+
+message CartPositionRequest {
+  int64 quantity = 1;
+  int64 sneakerId = 2;
+}
+message CartRequest {
+  repeated int64 cartPositions = 1;
+  google.protobuf.Timestamp createdAt = 2;
+  int64 userId = 3;
+}
+message SneakerResponse {
+  int64 sneakerId = 1;
+  double sneakerPrice = 2;
+  string sneakerName = 3;
+  string linkToPicture = 4;
+}
+message CartPositionResponse {
+  int64 positionId = 1;
+  int64 quantity = 2;
+  SneakerResponse sneaker = 3;
+}
+message UserResponse {
+  int64 userId = 1;
+  string username = 2;
+  string information = 3;
+}
+message CartResponse {
+  int64 cartId = 1;
+  repeated CartPositionResponse cartPositions = 2;
+  google.protobuf.Timestamp createdAt = 3;
+  UserResponse user = 4;
+}
+message CartRequestWithId {
+  CartRequest cart = 1;
+  int64 cartId = 2;
+}
+message CartId {
+  int64 cartId = 1;
+}
+message CartPositionId {
+  int64 cartPositionId = 1;
+}
+message ListOfPositionsWithCartId {
+  int64 cartId = 1;
+  repeated CartPositionId cartPositions = 2;
+}
+service CartController {
+  rpc createCart(CartRequest) returns (CartResponse);
+  rpc updateCart(CartRequestWithId) returns (CartResponse);
+  rpc getCart(CartId) returns (CartResponse);
+  rpc deleteCart(CartId) returns (google.protobuf.Empty);
+  rpc updateListOfPositions(ListOfPositionsWithCartId) returns (CartResponse);
+}
+message CartPositionWithId {
+  int64 cartPositionWithId = 1;
+  CartPositionRequest cartPositionRequest = 2;
+}
+service CartPositionController {
+  rpc createCartPosition(CartPositionRequest) returns (CartPositionResponse);
+  rpc updateCartPosition(CartRequestWithId) returns (CartPositionResponse);
+  rpc getCartPosition(CartPositionId) returns (CartPositionResponse);
+  rpc deleteCartPosition(CartPositionId) returns (CartPositionResponse);
+}
+
