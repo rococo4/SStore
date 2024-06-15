@@ -8,6 +8,7 @@
 
     <modules>
         <module>ProductService</module>
+        <module>ProtoService</module>
         <!-- Другие модули -->
     </modules>
 
@@ -20,7 +21,9 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
         </dependencies>
+
     </dependencyManagement>
 
     <properties>
