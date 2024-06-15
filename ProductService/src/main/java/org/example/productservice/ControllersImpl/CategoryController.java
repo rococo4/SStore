@@ -4,6 +4,7 @@ import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.example.productservice.CategoryControllerGrpc;
+
 import org.example.productservice.ProductService;
 import org.example.productservice.Services.CategoryService;
 
