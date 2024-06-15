@@ -9,6 +9,7 @@
     <modules>
         <module>ProductService</module>
         <module>ProtoService</module>
+        <module>CartService</module>
         <!-- Другие модули -->
     </modules>
 
