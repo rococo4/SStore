@@ -1,5 +1,8 @@
 package com.example.cartservice.Services;
 
+import com.example.cartservice.Factories.CartPositionFactory;
+import com.example.cartservice.store.Entities.CartPositionEntity;
+import com.example.cartservice.store.Repositories.CartPositionRepository;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.example.cartservice.CartService;
@@ -12,41 +15,71 @@ public class CartPositionsService {
     private final CartPositionFactory cartPositionFactory;
 
     public void createCartPosition(CartService.CartPositionRequest request,
-                                     StreamObserver<CartService.CartPositionResponse> responseObserver) { {
-        CartPositionEntity cart = CartPositionEntity.builder()
-                .quantity(cartPositionRequest.getQuantity())
-                .sneakerId(cartPositionRequest.getSneakerId())
-                .build();
-        return  cartPositionFactory.makeCartPositionResponse(cartPositionRepository.saveAndFlush(cart));
+                                   StreamObserver<CartService.CartPositionResponse> responseObserver) {
+        try {
+            CartPositionEntity cart = CartPositionEntity.builder()
+                    .quantity(request.getQuantity())
+                    .sneakerId(request.getSneakerId())
+                    .build();
 
-    }
-
-
-    public CartPositionResponse updateCartPosition(
-            Long cartPositionId,
-            CartPositionRequest cartPositionRequest) {
-
-        // todo: throw exception
-        CartPositionEntity cart = cartPositionRepository.findById(cartPositionId).orElseThrow();
-
-        if (cartPositionRequest.getQuantity() != null) {
-            cart.setQuantity(cartPositionRequest.getQuantity());
-        }
-        if (cartPositionRequest.getSneakerId() != null) {
-            cart.setSneakerId(cartPositionRequest.getSneakerId());
+            responseObserver.onNext(cartPositionFactory
+                    .makeCartPositionResponse(cartPositionRepository.saveAndFlush(cart)));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
         }
 
-        return cartPositionFactory.makeCartPositionResponse(cartPositionRepository.saveAndFlush(cart));
+
     }
 
-    public CartPositionResponse getCartPosition(Long cartPositionId) {
-        return cartPositionFactory.makeCartPositionResponse
-                (cartPositionRepository
-                        .findById(cartPositionId)
-                        .orElseThrow());
+
+    public void updateCartPosition(CartService.CartPositionRequestWithId request,
+                                   StreamObserver<CartService.CartPositionResponse> responseObserver) {
+
+
+        try {
+            // todo: throw exception
+            CartPositionEntity cart = cartPositionRepository.findById(request.getCartPositionId()).orElseThrow();
+
+            if (request.getCartPosition().getQuantity() != 0) {
+                cart.setQuantity(request.getCartPosition().getQuantity());
+            }
+            if (request.getCartPosition().getSneakerId() != 0) {
+                cart.setSneakerId(request.getCartPosition().getSneakerId());
+            }
+
+            responseObserver.onNext(cartPositionFactory
+                    .makeCartPositionResponse(cartPositionRepository.saveAndFlush(cart)));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+
     }
 
-    public void deleteCartPosition(Long cartPositionId) {
-        cartPositionRepository.deleteById(cartPositionId);
+    public void getCartPosition(CartService.CartPositionId request,
+                                StreamObserver<CartService.CartPositionResponse> responseObserver) {
+        try {
+            responseObserver.onNext(
+                    cartPositionFactory.makeCartPositionResponse
+                            (cartPositionRepository
+                                    .findById(request.getCartPositionId())
+                                    .orElseThrow()));
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+
+    }
+
+    public void deleteCartPosition(CartService.CartPositionId request,
+                                   StreamObserver<com.google.protobuf.Empty> responseObserver) {
+        try {
+            cartPositionRepository.deleteById(request.getCartPositionId());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+
     }
 }
