@@ -41,6 +41,10 @@ message CartId {
 message CartPositionId {
   int64 cartPositionId = 1;
 }
+message CartPositionRequestWithId{
+  int64 cartPositionId = 1;
+  CartPositionRequest cartPosition = 2;
+}
 message ListOfPositionsWithCartId {
   int64 cartId = 1;
   repeated CartPositionId cartPositions = 2;
@@ -58,8 +62,8 @@ message CartPositionWithId {
 }
 service CartPositionController {
   rpc createCartPosition(CartPositionRequest) returns (CartPositionResponse);
-  rpc updateCartPosition(CartRequestWithId) returns (CartPositionResponse);
+  rpc updateCartPosition(CartPositionRequestWithId) returns (CartPositionResponse);
   rpc getCartPosition(CartPositionId) returns (CartPositionResponse);
-  rpc deleteCartPosition(CartPositionId) returns (CartPositionResponse);
+  rpc deleteCartPosition(CartPositionId) returns (google.protobuf.Empty);
 }
 
