@@ -1,0 +1,36 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+package org.example.userservice;
+
+message SignInRequest {
+  string login = 1;
+  string password = 2;
+}
+message SignUpRequest {
+  string login = 1;
+  string password = 2;
+  string email = 3;
+}
+message UserResponse {
+  int64 userId = 1;
+  string username = 2;
+}
+message UserResponseWithJwt {
+  UserResponse user = 1;
+  string jwt = 2;
+}
+message UserId {
+  int64 userId = 1;
+}
+message UpdateUserRequest {
+  string password = 1;
+  string email = 2;
+  int64 userId = 3;
+}
+service UserController {
+  rpc SignUp(SignUpRequest) returns (UserResponseWithJwt);
+  rpc SignIn(SignInRequest) returns (UserResponseWithJwt);
+  rpc GetUserById(UserId) returns(UserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns(UserResponse);
+  rpc DeleteUser(UserId) returns (google.protobuf.Empty);
+}

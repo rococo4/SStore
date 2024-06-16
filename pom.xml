@@ -11,6 +11,7 @@
         <module>ProtoService</module>
         <module>CartService</module>
         <module>OrchestratorService</module>
+        <module>UserService</module>
         <!-- Другие модули -->
     </modules>
 
