@@ -10,6 +10,7 @@
         <module>ProductService</module>
         <module>ProtoService</module>
         <module>CartService</module>
+        <module>OrchestratorService</module>
         <!-- Другие модули -->
     </modules>
 
