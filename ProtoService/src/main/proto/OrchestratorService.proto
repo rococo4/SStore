@@ -1,0 +1,24 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+package org.example.orchestratorservice;
+import "ProductService.proto";
+import "CartService.proto";
+
+message UserId {
+  int64 userId = 1;
+}
+message SneakerId {
+  int64 sneakerId = 1;
+}
+message CartId {
+  int64 cartId = 1;
+}
+message OrderId {
+  int64 orderId = 1;
+}
+service OrchestratorController {
+  rpc getUserById(UserId) returns(cartservice.UserResponse);
+  rpc getSneakerById(SneakerId) returns (productservice.SneakerResponse);
+  rpc getCartById(CartId) returns (cartservice.CartResponse);
+  //rpc getOrderById(OrderId) returns (OrderResponse);
+}
