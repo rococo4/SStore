@@ -10,6 +10,8 @@ import org.example.cartservice.CartService;
 import org.example.orchestratorservice.OrchestratorService;
 import org.example.productservice.ProductService;
 import org.example.productservice.SneakerControllerGrpc;
+import org.example.userservice.UserControllerGrpc;
+import org.example.userservice.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +25,19 @@ public class OrchestratorsService {
     @Value("${UserService.grpc.server.port}")
     private int userServicePort;
 
-    public void getUserById(OrchestratorService.UserId request,
-                            StreamObserver<CartService.UserResponse> responseObserver) {
+    public void getUserById(UserService.UserId request,
+                            StreamObserver<UserService.UserResponse> responseObserver) {
+        try {
+            ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", userServicePort)
+                    .usePlaintext().build();
+            UserControllerGrpc.UserControllerBlockingStub blockingStub =
+                    UserControllerGrpc.newBlockingStub(channel);
+            UserService.UserResponse userResponse = blockingStub.getUserById(request);
+            responseObserver.onNext(userResponse);
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
     }
 
     public void getSneakerById(ProductService.SneakerId request,

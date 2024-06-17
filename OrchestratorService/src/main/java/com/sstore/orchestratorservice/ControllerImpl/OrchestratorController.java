@@ -7,13 +7,15 @@ import org.example.cartservice.CartService;
 import org.example.orchestratorservice.OrchestratorControllerGrpc;
 import org.example.orchestratorservice.OrchestratorService;
 import org.example.productservice.ProductService;
+import org.example.userservice.UserService;
+
 @RequiredArgsConstructor
 public class OrchestratorController extends OrchestratorControllerGrpc.OrchestratorControllerImplBase {
     private final OrchestratorsService orchestratorService;
 
     @Override
-    public void getUserById(OrchestratorService.UserId request,
-                            StreamObserver<CartService.UserResponse> responseObserver) {
+    public void getUserById(UserService.UserId request,
+                            StreamObserver<UserService.UserResponse> responseObserver) {
         orchestratorService.getUserById(request, responseObserver);
     }
     @Override

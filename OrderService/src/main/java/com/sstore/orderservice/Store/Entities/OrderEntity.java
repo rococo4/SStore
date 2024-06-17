@@ -1,10 +1,7 @@
 package com.sstore.orderservice.Store.Entities;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.example.orderservice.OrderService;
 
 import java.time.Instant;
@@ -13,7 +10,8 @@ import java.time.Instant;
 @Getter
 @Setter
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

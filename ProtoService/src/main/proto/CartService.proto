@@ -2,6 +2,7 @@ syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "ProductService.proto";
+import "UserService.proto";
 package org.example.cartservice;
 
 
@@ -20,16 +21,11 @@ message CartPositionResponse {
   int64 quantity = 2;
   org.example.productservice.SneakerResponse sneaker = 3;
 }
-message UserResponse {
-  int64 userId = 1;
-  string username = 2;
-  string information = 3;
-}
 message CartResponse {
   int64 cartId = 1;
   repeated CartPositionResponse cartPositions = 2;
   google.protobuf.Timestamp createdAt = 3;
-  UserResponse user = 4;
+  userservice.UserResponse user = 4;
 }
 message CartRequestWithId {
   CartRequest cart = 1;

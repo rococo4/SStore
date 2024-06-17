@@ -8,7 +8,6 @@ import org.example.cartservice.CartService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
-@Component
 @RequiredArgsConstructor
 public class CartController extends CartControllerGrpc.CartControllerImplBase {
     private final CartsService cartService;
