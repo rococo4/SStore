@@ -12,6 +12,7 @@
         <module>CartService</module>
         <module>OrchestratorService</module>
         <module>UserService</module>
+        <module>OrderService</module>
         <!-- Другие модули -->
     </modules>
 
