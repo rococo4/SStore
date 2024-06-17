@@ -3,12 +3,19 @@ import "google/protobuf/empty.proto";
 package org.example.orchestratorservice;
 import "ProductService.proto";
 import "CartService.proto";
-import "UserService.proto";
-import "OrderService.proto";
 
+message UserId {
+  int64 userId = 1;
+}
+message CartId {
+  int64 cartId = 1;
+}
+message OrderId {
+  int64 orderId = 1;
+}
 service OrchestratorController {
-  rpc getUserById(org.example.userservice.UserId) returns(userservice.UserResponse);
+  rpc getUserById(UserId) returns(cartservice.UserResponse);
   rpc getSneakerById(org.example.productservice.SneakerId) returns (productservice.SneakerResponse);
   rpc getCartById(org.example.cartservice.CartId) returns (cartservice.CartResponse);
-  rpc getOrderById(orderservice.OrderId) returns (orderservice.OrderResponse);
+  //rpc getOrderById(OrderId) returns (OrderResponse);
 }
