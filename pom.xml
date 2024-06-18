@@ -15,6 +15,7 @@
         <module>OrchestratorService</module>
         <module>UserService</module>
         <module>OrderService</module>
+        <module>GatewayService</module>
         <!-- Другие модули -->
     </modules>
 

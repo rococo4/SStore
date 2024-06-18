@@ -38,7 +38,7 @@ public class UsersService {
                             UserEntity.builder()
                             .email(request.getEmail())
                             .password(passwordEncoder.encode(request.getPassword()))
-                            .role(Roles.USER)
+                            .role(UserService.Roles.USER)
                             .build()
                     )
             ));
@@ -122,5 +122,20 @@ public class UsersService {
             responseObserver.onError(e);
         }
 
+    }
+    public void updateUserRole(UserService.RoleRequest role,
+                               StreamObserver<UserService.UserResponse> responseObserver) {
+        try {
+            UserEntity user = userRepository.findById(role.getUserId()).orElseThrow();
+            user.setRole(role.getRole());
+            responseObserver.onNext(
+                    userFactory.makeUserResponse(
+                            userRepository.saveAndFlush(user)
+                    )
+            );
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onCompleted();
+        }
     }
 }

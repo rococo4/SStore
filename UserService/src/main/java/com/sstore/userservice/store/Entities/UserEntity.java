@@ -2,6 +2,7 @@ package com.sstore.userservice.store.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.userservice.UserService;
 
 
 @Entity
@@ -19,5 +20,5 @@ public class UserEntity {
     private String password;
     private String username;
     private String email;
-    private Roles role;
+    private UserService.Roles role;
 }
