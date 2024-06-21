@@ -1,6 +1,8 @@
 package com.sstore.userservice.store.Entities;
 
-public enum Roles {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Roles  {
     ADMIN,
     USER
 }

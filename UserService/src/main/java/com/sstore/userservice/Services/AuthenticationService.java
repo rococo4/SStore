@@ -1,17 +1,14 @@
-package com.sstore.getwayservice.Services;
+package com.sstore.userservice.Services;
 
 import com.sstore.getwayservice.Requests.SignInRequest;
 import com.sstore.getwayservice.Requests.SignUpRequest;
 import com.sstore.getwayservice.Responses.JwtResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.example.userservice.UserControllerGrpc;
 import org.example.userservice.UserService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor

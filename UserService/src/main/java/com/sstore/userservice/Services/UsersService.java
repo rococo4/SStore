@@ -1,6 +1,9 @@
 package com.sstore.userservice.Services;
 
+import com.sstore.userservice.config.PasswordEncoderConfig;
 import com.sstore.userservice.store.Entities.Roles;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.google.protobuf.Empty;
 import com.sstore.userservice.Factories.UserFactory;
@@ -20,8 +23,8 @@ import java.util.Objects;
 public class UsersService {
     private final UserRepository userRepository;
     private final UserFactory userFactory;
-
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoderConfig passwordEncoderConfig;
+    private final JwtService jwtService;
 
     public void signUp(UserService.SignUpRequest request,
                        StreamObserver<UserService.UserResponse> responseObserver) {
@@ -37,7 +40,8 @@ public class UsersService {
                     userRepository.saveAndFlush(
                             UserEntity.builder()
                             .email(request.getEmail())
-                            .password(passwordEncoder.encode(request.getPassword()))
+                            .password(passwordEncoderConfig.getPasswordEncoder()
+                                    .encode(request.getPassword()))
                             .role(UserService.Roles.USER)
                             .build()
                     )
@@ -53,8 +57,8 @@ public class UsersService {
                        StreamObserver<UserService.UserResponse> responseObserver) {
         try {
             UserEntity user = userRepository.findByUsername(request.getLogin()).orElseThrow();
-            if (passwordEncoder.matches(user.getPassword(),
-                    passwordEncoder.encode(request.getPassword()))) {
+            if (passwordEncoderConfig.getPasswordEncoder().matches(user.getPassword(),
+                    passwordEncoderConfig.getPasswordEncoder().encode(request.getPassword()))) {
                 responseObserver.onNext(userFactory.makeUserResponse(user));
                 responseObserver.onCompleted();
             } else {
@@ -95,7 +99,7 @@ public class UsersService {
 
             }
             if (!request.getPassword().isEmpty()) {
-                if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                if (!passwordEncoderConfig.getPasswordEncoder().matches(request.getPassword(), user.getPassword())) {
                     user.setPassword(request.getPassword());
                 } else {
                     throw new RuntimeException("The same password");
@@ -138,4 +142,25 @@ public class UsersService {
             responseObserver.onCompleted();
         }
     }
+
+    public void verify(UserService.VerifyRequest request,
+                       StreamObserver<UserService.VerifyResponse> responseObserver) {
+        try {
+            String username = jwtService.getUsername(request.getJwt());
+            UserEntity user = userRepository.findByUsername(username).orElseThrow();
+            UserService.VerifyResponse response = UserService.VerifyResponse.newBuilder()
+                    .setLogin(user.getUsername())
+                    .setUserId(user.getId())
+                    .setRole(user.getRole())
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(e);
+        }
+    }
+    public UserDetailsService userDetailsService() {
+        return username -> userRepository.findByUsername(username).orElseThrow();
+    }
+
 }

@@ -1,12 +1,9 @@
-package com.sstore.getwayservice.Services;
+package com.sstore.userservice.Services;
 
 import com.sstore.userservice.store.Entities.Roles;
-import com.sstore.userservice.store.Entities.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.example.userservice.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -49,8 +46,9 @@ public class JwtService {
     public String getUsername(String token) {
         return getClaimsFromToken(token).getSubject();
     }
-    public boolean isTokenValid(String token) {
-        return !isTokenExpired(token);
+    public boolean isTokenValid(String token, String username) {
+        String usernameFromToken = getUsername(token);
+        return usernameFromToken.equals(username) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

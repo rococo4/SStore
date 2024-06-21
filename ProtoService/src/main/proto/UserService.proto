@@ -32,6 +32,15 @@ message RoleRequest {
   Roles role = 1;
   int64 userId = 2;
 }
+message VerifyRequest {
+  string jwt = 1;
+}
+message VerifyResponse {
+  int64 userId = 1;
+  string login = 2;
+  Roles role = 3;
+
+}
 service UserController {
   rpc SignUp(SignUpRequest) returns (UserResponse);
   rpc SignIn(SignInRequest) returns (UserResponse);
@@ -39,4 +48,5 @@ service UserController {
   rpc UpdateUser(UpdateUserRequest) returns(UserResponse);
   rpc DeleteUser(UserId) returns (google.protobuf.Empty);
   rpc UpdateUserRole(RoleRequest) returns (UserResponse);
+  rpc Verify(VerifyRequest) returns (VerifyResponse);
 }

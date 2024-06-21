@@ -36,4 +36,17 @@ public class UsersController extends UserControllerGrpc.UserControllerImplBase {
                            StreamObserver<Empty> responseObserver) {
         userService.deleteUser(request, responseObserver);
     }
+    @Override
+    public void updateUserRole(UserService.RoleRequest request,
+                               StreamObserver<UserService.UserResponse> responseObserver) {
+        userService.updateUserRole(request, responseObserver);
+    }
+
+    @Override
+    public void verify(UserService.VerifyRequest request,
+                       StreamObserver<UserService.VerifyResponse> responseObserver) {
+        userService.verify(request, responseObserver);
+
+    }
+
 }
