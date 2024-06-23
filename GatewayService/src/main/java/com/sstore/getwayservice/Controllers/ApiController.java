@@ -1,5 +1,6 @@
 package com.sstore.getwayservice.Controllers;
 
+import com.sstore.getwayservice.Services.ApiService;
 import com.sstore.getwayservice.Services.VerifyService;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -8,7 +9,6 @@ import org.apache.catalina.User;
 import org.example.userservice.UserControllerGrpc;
 import org.example.userservice.UserService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ApiController {
 
-    private final VerifyService verifyService;
-    private final SecurityFilterChain defaultSecurityFilterChain;
+    private final ApiService apiService;
 
     @PostMapping("/secure")
     public Object secure(@RequestHeader("jwt") String token,
@@ -26,6 +25,6 @@ public class ApiController {
                          @RequestHeader("endpoint") String endpoint,
                          @RequestBody Object body) {
 
-
+        return apiService.sendRequest(token, serviceName, requestType, endpoint, body);
     }
 }

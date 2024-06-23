@@ -17,7 +17,7 @@ import java.util.Map;
 public class JwtService {
     @Value("${jwt.security.secret}")
     private String secret;
-    @Value("${jwt.security.lifetime")
+    @Value("${jwt.lifetime}")
     private Duration lifetime;
 
     public String generateToken(UserService.UserResponse user) {

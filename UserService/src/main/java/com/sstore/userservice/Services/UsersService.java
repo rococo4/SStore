@@ -45,6 +45,7 @@ public class UsersService {
                             .role(UserService.Roles.USER)
                             .build()
                     )
+
             ));
             responseObserver.onCompleted();
         } catch (RuntimeException e) {
