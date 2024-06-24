@@ -2,6 +2,7 @@ package com.sstore.userservice.Services;
 
 import com.sstore.userservice.config.PasswordEncoderConfig;
 import com.sstore.userservice.store.Entities.Roles;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,7 +28,7 @@ public class UsersService {
     private final JwtService jwtService;
 
     public void signUp(UserService.SignUpRequest request,
-                       StreamObserver<UserService.UserResponse> responseObserver) {
+                       StreamObserver<UserService.JwtResponse> responseObserver) {
         try {
             if (userRepository.existsByEmail(request.getEmail())) {
                 throw new RuntimeException();
@@ -36,17 +37,17 @@ public class UsersService {
                 throw new RuntimeException();
             }
 
-            responseObserver.onNext(userFactory.makeUserResponse(
-                    userRepository.saveAndFlush(
+            UserEntity user = userRepository.saveAndFlush(
                             UserEntity.builder()
-                            .email(request.getEmail())
-                            .password(passwordEncoderConfig.getPasswordEncoder()
-                                    .encode(request.getPassword()))
-                            .role(UserService.Roles.USER)
-                            .build()
-                    )
+                                    .email(request.getEmail())
+                                    .password(passwordEncoderConfig.getPasswordEncoder()
+                                            .encode(request.getPassword()))
+                                    .role(UserService.Roles.USER)
+                                    .build()
+                    );
 
-            ));
+            responseObserver.onNext(UserService.JwtResponse.newBuilder()
+                    .setJwt(jwtService.generateToken(user)).build());
             responseObserver.onCompleted();
         } catch (RuntimeException e) {
             responseObserver.onError(e);
@@ -55,12 +56,13 @@ public class UsersService {
     }
 
     public void signIn(UserService.SignInRequest request,
-                       StreamObserver<UserService.UserResponse> responseObserver) {
+                       StreamObserver<UserService.JwtResponse> responseObserver) {
         try {
             UserEntity user = userRepository.findByUsername(request.getLogin()).orElseThrow();
             if (passwordEncoderConfig.getPasswordEncoder().matches(user.getPassword(),
                     passwordEncoderConfig.getPasswordEncoder().encode(request.getPassword()))) {
-                responseObserver.onNext(userFactory.makeUserResponse(user));
+                responseObserver.onNext(UserService.JwtResponse.newBuilder()
+                        .setJwt(jwtService.generateToken(user)).build());
                 responseObserver.onCompleted();
             } else {
                 throw new RuntimeException("Wrong password");
@@ -91,7 +93,7 @@ public class UsersService {
                            StreamObserver<UserService.UserResponse> responseObserver) {
         try {
             UserEntity user = userRepository.findById(request.getUserId()).orElseThrow();
-            if(!request.getEmail().isEmpty()) {
+            if (!request.getEmail().isEmpty()) {
                 if (!userRepository.existsByEmail(request.getEmail())) {
                     user.setEmail(request.getEmail());
                 } else {
@@ -128,6 +130,7 @@ public class UsersService {
         }
 
     }
+
     public void updateUserRole(UserService.RoleRequest role,
                                StreamObserver<UserService.UserResponse> responseObserver) {
         try {
@@ -160,6 +163,7 @@ public class UsersService {
             responseObserver.onError(e);
         }
     }
+
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username).orElseThrow();
     }

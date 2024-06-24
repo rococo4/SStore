@@ -39,6 +39,7 @@ public class ApiService {
                               String endpoint, Object body) {
 
         UserService.VerifyResponse verifyResponse = verifyService.verify(token);
+
         ManagedChannel orderChannel = ManagedChannelBuilder.forAddress("localhost", orderServicePort)
                 .usePlaintext().build();
         OrderControllerGrpc.OrderControllerBlockingStub orderStub = OrderControllerGrpc.newBlockingStub(orderChannel);

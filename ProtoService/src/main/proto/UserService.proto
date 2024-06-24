@@ -35,6 +35,9 @@ message RoleRequest {
 message VerifyRequest {
   string jwt = 1;
 }
+message JwtResponse {
+  string jwt = 1;
+}
 message VerifyResponse {
   int64 userId = 1;
   string login = 2;
@@ -42,8 +45,8 @@ message VerifyResponse {
 
 }
 service UserController {
-  rpc SignUp(SignUpRequest) returns (UserResponse);
-  rpc SignIn(SignInRequest) returns (UserResponse);
+  rpc SignUp(SignUpRequest) returns (JwtResponse);
+  rpc SignIn(SignInRequest) returns (JwtResponse);
   rpc GetUserById(UserId) returns(UserResponse);
   rpc UpdateUser(UpdateUserRequest) returns(UserResponse);
   rpc DeleteUser(UserId) returns (google.protobuf.Empty);

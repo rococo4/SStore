@@ -28,6 +28,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-okhttp</artifactId>
+                <version>1.56.0</version>
+            </dependency>
+
+
 
         </dependencies>
 

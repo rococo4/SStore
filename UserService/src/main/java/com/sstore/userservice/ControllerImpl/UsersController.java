@@ -13,12 +13,12 @@ public class UsersController extends UserControllerGrpc.UserControllerImplBase {
     private final UsersService userService;
     @Override
     public void signUp(UserService.SignUpRequest request,
-                       StreamObserver<UserService.UserResponse> responseObserver) {
+                       StreamObserver<UserService.JwtResponse> responseObserver) {
         userService.signUp(request, responseObserver);
     }
     @Override
     public void signIn(UserService.SignInRequest request,
-                       StreamObserver<UserService.UserResponse> responseObserver) {
+                       StreamObserver<UserService.JwtResponse> responseObserver) {
         userService.signIn(request, responseObserver);
     }
     @Override

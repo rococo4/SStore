@@ -25,11 +25,7 @@ public class SecurityContextConfiguration {
                                 )
                                 .permitAll()
                                 .anyRequest()
-                                .authenticated()
-                )
-                .addFilterBefore(
-                        authFilter,
-                        UsernamePasswordAuthenticationFilter.class
+                                .permitAll()
                 );
         return http.build();
     }

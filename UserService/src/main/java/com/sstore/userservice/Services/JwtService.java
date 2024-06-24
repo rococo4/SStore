@@ -1,6 +1,7 @@
 package com.sstore.userservice.Services;
 
 import com.sstore.userservice.store.Entities.Roles;
+import com.sstore.userservice.store.Entities.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,10 +21,10 @@ public class JwtService {
     @Value("${jwt.lifetime}")
     private Duration lifetime;
 
-    public String generateToken(UserService.UserResponse user) {
+    public String generateToken(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole());
-        claims.put("id", user.getUserId());
+        claims.put("id", user.getId());
         Date issuedDate = new Date();
         Date expiredDate = new Date(issuedDate.getTime() + lifetime.toMillis());
         return Jwts.builder()
