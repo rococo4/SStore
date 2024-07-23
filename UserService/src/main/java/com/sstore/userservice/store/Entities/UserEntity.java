@@ -3,7 +3,7 @@ package com.sstore.userservice.store.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.catalina.User;
-import org.example.userservice.UserService;
+import com.sstore.userservice.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -3,8 +3,8 @@ package com.sstore.orderservice.ControllerImpl;
 import com.sstore.orderservice.Services.OrdersService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.orderservice.OrderControllerGrpc;
-import org.example.orderservice.OrderService;
+import com.sstore.orderservice.OrderControllerGrpc;
+import com.sstore.orderservice.OrderService;
 
 @RequiredArgsConstructor
 public class OrderController extends OrderControllerGrpc.OrderControllerImplBase {

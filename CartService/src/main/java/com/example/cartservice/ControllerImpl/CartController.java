@@ -3,8 +3,8 @@ package com.example.cartservice.ControllerImpl;
 import com.example.cartservice.Services.CartsService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.cartservice.CartControllerGrpc;
-import org.example.cartservice.CartService;
+import com.sstore.cartservice.CartControllerGrpc;
+import com.sstore.cartservice.CartService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 

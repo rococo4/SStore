@@ -4,18 +4,19 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.example.cartservice.CartControllerGrpc;
-import org.example.cartservice.CartPositionControllerGrpc;
-import org.example.cartservice.CartService;
-import org.example.orderservice.OrderControllerGrpc;
-import org.example.orderservice.OrderService;
-import org.example.productservice.CategoryControllerGrpc;
-import org.example.productservice.ProductService;
-import org.example.productservice.SneakerControllerGrpc;
-import org.example.userservice.UserControllerGrpc;
-import org.example.userservice.UserService;
+import com.sstore.cartservice.CartControllerGrpc;
+import com.sstore.cartservice.CartPositionControllerGrpc;
+import com.sstore.cartservice.CartService;
+import com.sstore.orderservice.OrderControllerGrpc;
+import com.sstore.orderservice.OrderService;
+import com.sstore.productservice.CategoryControllerGrpc;
+import com.sstore.productservice.ProductService;
+import com.sstore.productservice.SneakerControllerGrpc;
+import com.sstore.userservice.UserControllerGrpc;
+import com.sstore.userservice.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component
 @RequiredArgsConstructor

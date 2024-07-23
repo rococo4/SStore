@@ -3,9 +3,9 @@ package org.example.productservice.ControllersImpl;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.productservice.ProductService;
+import com.sstore.productservice.ProductService;
 import org.example.productservice.Services.SneakerService;
-import org.example.productservice.SneakerControllerGrpc;
+import com.sstore.productservice.SneakerControllerGrpc;
 
 @RequiredArgsConstructor
 public class SneakerController extends SneakerControllerGrpc.SneakerControllerImplBase {

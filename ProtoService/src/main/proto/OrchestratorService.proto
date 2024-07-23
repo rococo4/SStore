@@ -1,6 +1,6 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
-package org.example.orchestratorservice;
+package com.sstore.orchestratorservice;
 import "ProductService.proto";
 import "CartService.proto";
 import "UserService.proto";
@@ -8,7 +8,7 @@ import "UserService.proto";
 
 service OrchestratorController {
   rpc getUserById(userservice.UserId) returns(userservice.UserResponse);
-  rpc getSneakerById(org.example.productservice.SneakerId) returns (productservice.SneakerResponse);
+  rpc getSneakerById(com.sstore.productservice.SneakerId) returns (productservice.SneakerResponse);
   rpc getCartById(cartservice.CartId) returns (cartservice.CartResponse);
   //rpc getOrderById(OrderId) returns (OrderResponse);
 }

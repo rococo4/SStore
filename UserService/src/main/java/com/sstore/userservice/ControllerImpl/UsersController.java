@@ -1,20 +1,38 @@
 package com.sstore.userservice.ControllerImpl;
 
 import com.google.protobuf.Empty;
+import com.sstore.userservice.Factories.UserFactory;
+import com.sstore.userservice.Services.JwtService;
 import com.sstore.userservice.Services.UsersService;
+import com.sstore.userservice.config.PasswordEncoderConfig;
+import com.sstore.userservice.store.Entities.UserEntity;
+import com.sstore.userservice.store.Repositories.UserRepository;
+import io.grpc.Status;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.userservice.UserControllerGrpc;
-import org.example.userservice.UserService;
+import com.sstore.userservice.UserControllerGrpc;
+import com.sstore.userservice.UserService;
+import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RequiredArgsConstructor
+@GrpcService
 public class UsersController extends UserControllerGrpc.UserControllerImplBase {
+    private static final Logger log = LoggerFactory.getLogger(UsersController.class);
     private final UsersService userService;
+    private final UserRepository userRepository;
+    private final UserFactory userFactory;
+    private final PasswordEncoderConfig passwordEncoderConfig;
+    private final JwtService jwtService;
+
     @Override
     public void signUp(UserService.SignUpRequest request,
                        StreamObserver<UserService.JwtResponse> responseObserver) {
-        userService.signUp(request, responseObserver);
+
     }
     @Override
     public void signIn(UserService.SignInRequest request,

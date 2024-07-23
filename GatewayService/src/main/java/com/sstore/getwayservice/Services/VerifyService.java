@@ -2,10 +2,11 @@ package com.sstore.getwayservice.Services;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.example.userservice.UserControllerGrpc;
-import org.example.userservice.UserService;
+import com.sstore.userservice.UserControllerGrpc;
+import com.sstore.userservice.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component
 public class VerifyService {

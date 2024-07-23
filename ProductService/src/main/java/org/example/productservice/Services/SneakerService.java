@@ -5,7 +5,7 @@ import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.example.productservice.Factories.SneakerFactory;
-import org.example.productservice.ProductService;
+import com.sstore.productservice.ProductService;
 import org.example.productservice.store.Enetities.SneakerEntity;
 import org.example.productservice.store.Repositories.CategoryRepository;
 import org.example.productservice.store.Repositories.SneakerRepository;

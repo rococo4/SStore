@@ -4,7 +4,7 @@ package org.example.productservice.Services;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.example.productservice.Factories.CategoryFactory;
-import org.example.productservice.ProductService;
+import com.sstore.productservice.ProductService;
 import org.example.productservice.store.Enetities.CategoryEntity;
 import org.example.productservice.store.Repositories.CategoryRepository;
 import org.springframework.stereotype.Service;

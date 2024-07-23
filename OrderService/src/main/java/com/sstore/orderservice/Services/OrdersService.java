@@ -5,7 +5,7 @@ import com.sstore.orderservice.Store.Entities.OrderEntity;
 import com.sstore.orderservice.Store.Repositories.OrderRepository;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.orderservice.OrderService;
+import com.sstore.orderservice.OrderService;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;

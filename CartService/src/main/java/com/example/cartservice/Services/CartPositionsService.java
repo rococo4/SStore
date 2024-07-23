@@ -5,7 +5,7 @@ import com.example.cartservice.store.Entities.CartPositionEntity;
 import com.example.cartservice.store.Repositories.CartPositionRepository;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.cartservice.CartService;
+import com.sstore.cartservice.CartService;
 import org.springframework.stereotype.Component;
 
 @Component

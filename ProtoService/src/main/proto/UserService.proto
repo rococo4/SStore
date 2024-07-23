@@ -1,6 +1,6 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
-package org.example.userservice;
+package com.sstore.userservice;
 
 enum Roles {
   USER = 0;

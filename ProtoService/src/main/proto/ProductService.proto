@@ -1,6 +1,6 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
-package org.example.productservice;
+package com.sstore.productservice;
 
 message FilterRequest {
   int32 fromPrice = 1;

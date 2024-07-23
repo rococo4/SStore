@@ -1,7 +1,12 @@
 package com.sstore.userservice.Services;
 
+import com.sstore.userservice.ControllerImpl.UsersController;
 import com.sstore.userservice.config.PasswordEncoderConfig;
 import com.sstore.userservice.store.Entities.Roles;
+import io.grpc.Status;
+import io.grpc.StatusRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +16,8 @@ import com.sstore.userservice.Factories.UserFactory;
 import com.sstore.userservice.store.Entities.UserEntity;
 import com.sstore.userservice.store.Repositories.UserRepository;
 import io.grpc.stub.StreamObserver;
-import kafka.utils.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
-import org.example.userservice.UserService;
+import com.sstore.userservice.UserService;
 import org.hibernate.annotations.Cache;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +25,8 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Component
-public class UsersService {
+public class UsersService  {
+    private static final Logger log = LoggerFactory.getLogger(UsersController.class);
     private final UserRepository userRepository;
     private final UserFactory userFactory;
     private final PasswordEncoderConfig passwordEncoderConfig;
@@ -29,38 +34,43 @@ public class UsersService {
 
     public void signUp(UserService.SignUpRequest request,
                        StreamObserver<UserService.JwtResponse> responseObserver) {
+        log.info("Sign up request received");
         try {
             if (userRepository.existsByEmail(request.getEmail())) {
-                throw new RuntimeException();
+                throw new RuntimeException("Email already in use");
             }
             if (userRepository.existsByUsername(request.getLogin())) {
-                throw new RuntimeException();
+                throw new RuntimeException("Username already in use");
             }
 
             UserEntity user = userRepository.saveAndFlush(
-                            UserEntity.builder()
-                                    .email(request.getEmail())
-                                    .password(passwordEncoderConfig.getPasswordEncoder()
-                                            .encode(request.getPassword()))
-                                    .role(UserService.Roles.USER)
-                                    .build()
-                    );
-
-            responseObserver.onNext(UserService.JwtResponse.newBuilder()
-                    .setJwt(jwtService.generateToken(user)).build());
+                    UserEntity.builder()
+                            .email(request.getEmail())
+                            .password(passwordEncoderConfig.getPasswordEncoder()
+                                    .encode(request.getPassword()))
+                            .role(UserService.Roles.USER)
+                            .username(request.getLogin())
+                            .build()
+            );
+            UserService.JwtResponse jwt = UserService.JwtResponse.newBuilder()
+                    .setJwt(jwtService.generateToken(user)).build();
+            responseObserver.onNext(jwt);
             responseObserver.onCompleted();
+            log.info("Sign up successful {}", jwt);
         } catch (RuntimeException e) {
-            responseObserver.onError(e);
+            log.info("Error caught {}", e.getMessage());
+            Status status = Status.UNKNOWN.withDescription(e.getMessage()).withCause(e);
+            responseObserver.onError(new StatusRuntimeException(status));
         }
 
     }
 
     public void signIn(UserService.SignInRequest request,
                        StreamObserver<UserService.JwtResponse> responseObserver) {
+
         try {
             UserEntity user = userRepository.findByUsername(request.getLogin()).orElseThrow();
-            if (passwordEncoderConfig.getPasswordEncoder().matches(user.getPassword(),
-                    passwordEncoderConfig.getPasswordEncoder().encode(request.getPassword()))) {
+            if (passwordEncoderConfig.getPasswordEncoder().matches(request.getPassword(),user.getPassword())) {
                 responseObserver.onNext(UserService.JwtResponse.newBuilder()
                         .setJwt(jwtService.generateToken(user)).build());
                 responseObserver.onCompleted();
@@ -68,7 +78,9 @@ public class UsersService {
                 throw new RuntimeException("Wrong password");
             }
         } catch (RuntimeException e) {
-            responseObserver.onError(e);
+            log.info("Error caught {}", e.getMessage());
+            Status status = Status.UNKNOWN.withDescription(e.getMessage()).withCause(e);
+            responseObserver.onError(new StatusRuntimeException(status));
         }
 
 
@@ -102,7 +114,7 @@ public class UsersService {
 
             }
             if (!request.getPassword().isEmpty()) {
-                if (!passwordEncoderConfig.getPasswordEncoder().matches(request.getPassword(), user.getPassword())) {
+                if (!passwordEncoderConfig.getPasswordEncoder().matches(request.getPassword(),user.getPassword())) {
                     user.setPassword(request.getPassword());
                 } else {
                     throw new RuntimeException("The same password");

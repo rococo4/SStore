@@ -2,7 +2,7 @@ package org.example.productservice.Factories;
 
 import org.example.productservice.store.Enetities.CategoryEntity;
 import lombok.AllArgsConstructor;
-import org.example.productservice.ProductService;
+import com.sstore.productservice.ProductService;
 import org.springframework.stereotype.Component;
 
 @Component

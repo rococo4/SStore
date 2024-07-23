@@ -4,9 +4,9 @@ import com.example.cartservice.store.Entities.CartPositionEntity;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Value;
-import org.example.cartservice.CartService;
-import org.example.orchestratorservice.OrchestratorControllerGrpc;
-import org.example.productservice.ProductService;
+import com.sstore.cartservice.CartService;
+import com.sstore.orchestratorservice.OrchestratorControllerGrpc;
+import com.sstore.productservice.ProductService;
 import org.springframework.stereotype.Component;
 
 @Component

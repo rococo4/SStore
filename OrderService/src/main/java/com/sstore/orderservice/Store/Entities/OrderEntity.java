@@ -2,7 +2,7 @@ package com.sstore.orderservice.Store.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.orderservice.OrderService;
+import com.sstore.orderservice.OrderService;
 
 import java.time.Instant;
 

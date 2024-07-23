@@ -3,9 +3,9 @@ package org.example.productservice.ControllersImpl;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.productservice.CategoryControllerGrpc;
+import com.sstore.productservice.CategoryControllerGrpc;
 
-import org.example.productservice.ProductService;
+import com.sstore.productservice.ProductService;
 import org.example.productservice.Services.CategoryService;
 
 @RequiredArgsConstructor

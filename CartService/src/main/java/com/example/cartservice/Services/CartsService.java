@@ -9,7 +9,7 @@ import com.example.cartservice.store.Repositories.CartRepository;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.cartservice.CartService;
+import com.sstore.cartservice.CartService;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;

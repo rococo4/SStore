@@ -3,11 +3,11 @@ package com.sstore.orchestratorservice.ControllerImpl;
 import com.sstore.orchestratorservice.Services.OrchestratorsService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.example.cartservice.CartService;
-import org.example.orchestratorservice.OrchestratorControllerGrpc;
-import org.example.orchestratorservice.OrchestratorService;
-import org.example.productservice.ProductService;
-import org.example.userservice.UserService;
+import com.sstore.cartservice.CartService;
+import com.sstore.orchestratorservice.OrchestratorControllerGrpc;
+import com.sstore.orchestratorservice.OrchestratorService;
+import com.sstore.productservice.ProductService;
+import com.sstore.userservice.UserService;
 
 @RequiredArgsConstructor
 public class OrchestratorController extends OrchestratorControllerGrpc.OrchestratorControllerImplBase {

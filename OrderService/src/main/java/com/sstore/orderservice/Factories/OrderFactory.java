@@ -5,13 +5,13 @@ import com.google.protobuf.util.Timestamps;
 import com.sstore.orderservice.Store.Entities.OrderEntity;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.example.cartservice.CartControllerGrpc;
-import org.example.orchestratorservice.OrchestratorControllerGrpc;
-import org.example.productservice.SneakerControllerGrpc;
+import com.sstore.cartservice.CartControllerGrpc;
+import com.sstore.orchestratorservice.OrchestratorControllerGrpc;
+import com.sstore.productservice.SneakerControllerGrpc;
 import org.springframework.beans.factory.annotation.Value;
-import org.example.cartservice.CartService;
-import org.example.orderservice.OrderService;
-import org.example.userservice.UserService;
+import com.sstore.cartservice.CartService;
+import com.sstore.orderservice.OrderService;
+import com.sstore.userservice.UserService;
 import org.springframework.stereotype.Component;
 
 @Component

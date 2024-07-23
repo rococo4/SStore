@@ -3,7 +3,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "ProductService.proto";
 import "UserService.proto";
-package org.example.cartservice;
+package com.sstore.cartservice;
 
 
 message CartPositionRequest {
@@ -19,7 +19,7 @@ message CartRequest {
 message CartPositionResponse {
   int64 positionId = 1;
   int64 quantity = 2;
-  org.example.productservice.SneakerResponse sneaker = 3;
+  productservice.SneakerResponse sneaker = 3;
 }
 message CartResponse {
   int64 cartId = 1;
